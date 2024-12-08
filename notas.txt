@@ -1,0 +1,74 @@
+ TODO: GATEWAY
+ 
+ crear carpetas anidadas
+ 
+ usar snippet en envs.ts 
+
+ instalar
+
+ npm i joi dotenv
+
+generar res 
+
+nest g res products 
+
+NO generar crud 
+
+eliminar appcontroller , spec appservices,
+
+eliminar product services , spec 
+
+quitar los errores que esto significa 
+
+
+crear el crud a mano 
+
+luego instalar microservices 
+
+
+ npm i --save @nestjs/microservices
+
+ https://docs.nestjs.com/microservices/basics
+ https://docs.nestjs.com/microservices/basics#client
+
+
+en este caso poner este codigo  en prodcust module 
+
+@Module({
+  controllers: [ProductsController],
+  providers: [],
+
+  imports: [
+    ClientsModule.register([
+      {
+        // TODO: TCP ES ELC ANAL DE COMUNICACION CON EL MICROSERVICIO
+        // DEFINIDO EN EL MICROSERVICIO
+        name: PRODUCT_SERVICE,
+        transport: Transport.TCP,
+        options: {
+          host: envs.productsMicroserviceOptions.host,
+          port: envs.productsMicroserviceOptions.port,
+        },
+      },
+    ]),
+  ],
+})
+export class ProductsModule {}
+
+
+TODO: COMUNICACION CON MICROSERVICIO 
+
+en el product controller del gateway 
+
+se pone el producstClient 
+y como segundo argumento el payload
+
+ return this.productsClient.send({ cmd: 'find_all_products' }, {});
+
+ TODO: COPIAR LA CARPETA COMMON QUE TIENE EL DTO DE PAGINACION
+
+ Y TRAERSELA AL PROUECTO DE GATEWAY
+
+ INSTALAR CLASS VAL Y TRANSFO
+
+ npm i class-validator class-transform
