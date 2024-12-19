@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { envs } from './config';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { RpcCustomExceptionFilter } from './common';
 
 async function bootstrap() {
   const logger = new Logger('Main-Gateway');
@@ -19,9 +20,12 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+
+  // TODO: EXCEPTION CUSTOM FILTER
+  app.useGlobalFilters(new RpcCustomExceptionFilter())
   
   //siempre este al final
   await app.listen(envs.port);
-  logger.log(`Server is running on: ${envs.port}`);
+  logger.log(`Gateway is running on: ${envs.port}`);
 }
 bootstrap();

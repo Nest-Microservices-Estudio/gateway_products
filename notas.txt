@@ -72,3 +72,79 @@ y como segundo argumento el payload
  INSTALAR CLASS VAL Y TRANSFO
 
  npm i class-validator class-transform
+
+ TODO_ EXCEPTIONS 
+
+ https://docs.nestjs.com/microservices/exception-filters
+
+ nos creamos un directorio en common exceptions 
+
+ creamos el arcghivo y copiamos este codigo para las excepciones
+
+ sacado de la documetnacion 
+
+ y lo pegamos 
+
+ (NO FUNCIONA EN HBIRIDOS (REST Y MICROSSERVICIOS))
+
+
+import { Catch, RpcExceptionFilter, ArgumentsHost } from '@nestjs/common';
+import { Observable, throwError } from 'rxjs';
+import { RpcException } from '@nestjs/microservices';
+
+
+import { Catch, ArgumentsHost, ExceptionFilter } from '@nestjs/common';
+
+import { RpcException } from '@nestjs/microservices';
+
+TRANSFORMADO A COMO SE NECESITA QUEDA ASI 
+
+@Catch(RpcException)
+export class RpcCustomExceptionFilter implements ExceptionFilter {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  catch(exception: RpcException, host: ArgumentsHost){
+    
+const ctx = host.switchToHttp()
+const response = ctx.getResponse()
+
+response.status(401).json({
+  status: 401,
+  message: 'Hola mundo soy un filtro de excepciones',
+})
+  }
+}
+LO PODEMOS PONER DE MANERA GKIVAK ESTE ExceptionFilter
+
+poner en main  app.useGlobalFilters(new RpcCustomExceptionFilter())
+
+TODO: TEORIA GATEWAY 
+
+GATEWAY ENVIA -> AL PAYLOAD DEL MICROSERVICIO
+
+
+TODO: NATS 
+
+CORRER SERVIDOR CON DOCKER
+docker run -d --name nats-main -p 4222:4222 -p 6222:6222 -p 8222:8222 nats
+
+CAMBIAR DE TCP A NATS
+
+
+1. instalar nats en PRODUCTS MS
+
+npm i --save nats
+
+2. cambiar de tcp a nats
+
+
+TODO: NATS CAMBIAR EN GATEWAY 
+
+YA NO CONECTAREMOS DE MANERA DIRECTA GATWAY COMO MS 
+SI NO QUE SERA AL SERVIDOR DE NATS 
+
+
+1.npm i --save nats
+2.cambiar archivo envs 
+3. al contrario de los ms en el gateway la configuracion se hace directo en el modulo que trabaja con ms 
+en este caso el prmero es p´roducts.module 
+ahi cambiamos de tcp a nats y llamamos a las variables deentorno de los servers nats 

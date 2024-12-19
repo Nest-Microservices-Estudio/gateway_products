@@ -1,33 +1,29 @@
 import { Module } from '@nestjs/common';
 import { ProductsController } from './products.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { envs, PRODUCT_SERVICE } from 'src/config';
+
+import { NatsModule } from 'src/transports/nats.module';
 
 @Module({
   controllers: [ProductsController],
   providers: [],
 
   imports: [
-    ClientsModule.register([
-      {
-        // TODO: TCP ES ELC ANAL DE COMUNICACION CON EL MICROSERVICIO
-        // DEFINIDO EN EL MICROSERVICIO
+    // TODO: NATS MOVEREMOS ESTO A UN MODULO ESPECIFICO
+    // ClientsModule.register([
+    //   {
+    //     // TODO: TCP ES ELC ANAL DE COMUNICACION CON EL MICROSERVICIO
+    //     // DEFINIDO EN EL MICROSERVICIO
 
-        
-        name: PRODUCT_SERVICE,
-        transport: Transport.TCP,
-        options: {
-          host: envs.productsMicroserviceOptions.host,
-          port: envs.productsMicroserviceOptions.port,
-        },
-      },
-    ]),
+    //     // name: PRODUCT_SERVICE,
+    //     //TODO: NATS CAMBIAR LA COMUINICACION DIRECTA CON PRODUCTS MS A NATS_SERVICE
+    //     name: NATS_SERVICE,
+    //     transport: Transport.NATS,
+    //     options: {
+    //       servers: envs.natsServers
+    //     },
+    //   },
+    // ]),
+    NatsModule
   ],
 })
-
-
-export class ProductsModule {
-
-
-  
-}
+export class ProductsModule {}
