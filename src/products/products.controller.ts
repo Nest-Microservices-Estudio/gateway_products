@@ -31,9 +31,12 @@ export class ProductsController {
 
   @Post()
   createProduct(@Body() createProductDto: CreateProductDto) {
+
+   console.log('entro al create product gateway', createProductDto);
+   
     try {
       return this.client.send(
-   'createOrder',
+   'create_product',
         createProductDto,
       );
     } catch (error) {

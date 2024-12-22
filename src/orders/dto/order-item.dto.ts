@@ -15,10 +15,10 @@ export class OrderItemDto {
 
     @IsNumber()
     @IsPositive()
-    // TODO: TYPE 
-
-    // TRANSOFRMA EL DATO QUE VIENE SI ES STRING LO HARA NMERO
     @Type(() => Number)
     price: number;
+
+
  
 }
+
