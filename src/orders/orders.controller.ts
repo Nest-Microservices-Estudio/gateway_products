@@ -103,7 +103,7 @@ export class OrdersController {
       throw new RpcException(error);
     }
   }
-F
+
   @Patch(':id')
   changeOrderStatus(
     @Param('id', ParseUUIDPipe) id: string,
